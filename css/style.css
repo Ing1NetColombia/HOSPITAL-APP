@@ -1,0 +1,5 @@
+.TituloLog{
+    display: flex;
+    flex-direction: row;
+    -ms-flex-align: center;
+}
