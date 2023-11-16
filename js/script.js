@@ -1,3 +1,13 @@
+$( window ).on( "load", function() {
+    let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
+    if(usuarioLog != null){
+       
+            window.location.href = "/pages/home.html";
+        
+    }
+    
+});
+
 function iniciarSesion() {
     let usuario = document.getElementById("usuario").value;
     let contra = document.getElementById("contra").value;
@@ -17,8 +27,8 @@ function iniciarSesion() {
         alert("Contraseña incorrecta");
         return;
     }
-
-    alert("Bienvenido!");
+    localStorage.setItem("usuario", JSON.stringify(usuarioLog[0]));
+    window.location.href = "../pages/home.html";
 }
 
 function registroUsuario(){
