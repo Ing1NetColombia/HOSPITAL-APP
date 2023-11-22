@@ -8,3 +8,18 @@
      width: 15vw; 
      margin-left: 4vw;
 }
+
+.card > img{
+    padding: 10%;
+    margin-top: 2%;
+}
+
+#navbarMio{
+    background-color: #6eb2ed !important;
+    
+}
+#navbarMio>div>a, #navbarMio>div>button>span {
+    color: white !important;
+    font-style: oblique;
+    font-weight: bold;
+}

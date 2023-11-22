@@ -3,6 +3,11 @@ window.addEventListener("load", function(){
     if(usuarioLog == null){
         window.location.href = "../index.html";
     }else{
-        window.history.go(-1);
+        //x = window.history.go(-1);
     }
 });
+
+function cerrarSesion(){
+    localStorage.removeItem("usuario");
+    window.location.href = "../index.html";
+}

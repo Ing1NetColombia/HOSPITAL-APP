@@ -17,3 +17,8 @@ function cerrarSesion(){
         window.location.href = "../index.html";
     }
 }
+
+function cargarPlantilla(plantilla, destino){
+
+    fetch
+}
