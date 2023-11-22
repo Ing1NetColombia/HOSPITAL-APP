@@ -3,3 +3,8 @@
     flex-direction: row;
     -ms-flex-align: center;
 }
+
+.card{
+     width: 15vw; 
+     margin-left: 4vw;
+}

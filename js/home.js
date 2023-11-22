@@ -1,9 +1,9 @@
-$( window ).on( "load", function() {
-    let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
-    if(usuarioLog == null){
-        window.location.href = "../index.html";
-    }
-});
+// $( window ).on( "load", function() {
+//     let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
+//     if(usuarioLog == null){
+//         window.location.href = "../index.html";
+//     }
+// });
 $(document).ready(function(){
     let offcanvas  = $("#offcanvasNavbarLabel");
     if(offcanvas){

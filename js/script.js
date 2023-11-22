@@ -1,12 +1,12 @@
-$( window ).on( "load", function() {
-    let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
-    if(usuarioLog != null){
+// $( window ).on( "load", function() {
+//     let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
+//     if(usuarioLog != null){
        
-            window.location.href = "/pages/home.html";
+//             window.location.href = "/pages/home.html";
         
-    }
+//     }
     
-});
+// });
 
 function iniciarSesion() {
     let usuario = document.getElementById("usuario").value;
