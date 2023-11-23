@@ -9,6 +9,7 @@ $(document).ready(function(){
     if(offcanvas){
         offcanvas.html("Bienvenido " + JSON.parse(localStorage.getItem("usuario"))["usuario"]);
     }
+    cargarPlantilla("inicio","divHome");
 });
 
 function cerrarSesion(){
@@ -19,6 +20,17 @@ function cerrarSesion(){
 }
 
 function cargarPlantilla(plantilla, destino){
-
-    fetch
+    var url = window.location.protocol + "//" + window.location.host + "/pages/"+plantilla+".html";
+    fetch(url,{headers: {
+        "Content-Type": "text/html",
+      }})
+      .then(function(response) {
+        return response.text()
+      })
+    .then(function(texto) {
+        console.log(texto);
+        var contenedor  = document.getElementById(destino);
+        contenedor.innerHTML = "";
+        contenedor.innerHTML = texto;
+    });
 }

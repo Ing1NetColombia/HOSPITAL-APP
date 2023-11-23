@@ -1,3 +1,13 @@
+body{
+   /* background-image: url("../media/remi_enfer.png");
+    background-repeat:round;
+    background-size: cover;*/
+}
+
+#iconNav{
+    width: 4vw;
+}
+
 .TituloLog{
     display: flex;
     flex-direction: row;
