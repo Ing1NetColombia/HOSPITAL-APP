@@ -1,0 +1,33 @@
+<a class="btn btn-secondary" onclick="cargarPlantilla('inicio','divHome');"
+  >volver</a
+>
+<div class="row">
+  <div class="col-4 offset-4">
+    <form class="form form-datos p-4">
+        <div class="form-group">
+            <h4 class="titulo">Datos de la cita:</h4>
+        </div>
+      <div class="form-group m-2">
+        <label for="patient">Paciente:</label>
+        <select class="form-control" id="patient" name="patient">
+          <option value="" disabled>Seleccione una opción</option>
+          <!-- Add patient options here -->
+        </select>
+      </div>
+      <div class="form-group m-2">
+        <label for="doctor">Doctor:</label>
+        <select class="form-control" id="doctor" name="doctor">
+          <option value="" disabled>Seleccione una opción</option>
+          <!-- Add doctor options here -->
+        </select>   
+      </div>
+      <div class="form-group m-2">
+        <label for="date">Fecha:</label>
+        <input class="form-control" type="date" id="date" name="date" />
+      </div>
+      <div class="form-group mx-auto col-2">
+        <button type="button" class="btn btn-success">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

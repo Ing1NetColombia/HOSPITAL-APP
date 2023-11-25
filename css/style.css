@@ -1,35 +1,77 @@
-body{
-   /* background-image: url("../media/remi_enfer.png");
+body {
+  /* background-image: url("../media/remi_enfer.png");
     background-repeat:round;
     background-size: cover;*/
 }
 
-#iconNav{
-    width: 4vw;
+#iconNav {
+  width: 4vw;
 }
 
-.TituloLog{
-    display: flex;
-    flex-direction: row;
-    -ms-flex-align: center;
+.TituloLog {
+  display: flex;
+  flex-direction: row;
+  -ms-flex-align: center;
 }
 
-.card{
-     width: 15vw; 
-     margin-left: 4vw;
+.card {
+  width: 15vw;
+  margin-left: 4vw;
 }
 
-.card > img{
-    padding: 10%;
-    margin-top: 2%;
+.card > img {
+  padding: 10%;
+  margin-top: 2%;
 }
 
-#navbarMio{
-    background-color: #6eb2ed !important;
-    
+#navbarMio {
+  background-color: #6eb2ed !important;
 }
-#navbarMio>div>a, #navbarMio>div>button>span {
-    color: white !important;
-    font-style: oblique;
-    font-weight: bold;
+#navbarMio > div > a,
+#navbarMio > div > button > span {
+  color: white !important;
+  font-style: oblique;
+  font-weight: bold;
+}
+
+.alink {
+  color: var(--bs-body-color) !important;
+  text-decoration: none;
+}
+
+.alink:hover {
+  cursor: pointer;
+}
+
+.imglink:hover {
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #6d89ed !important;
+  border-color: #637bd5 !important;
+}
+
+.btn-success:hover {
+  background-color: #637bd5 !important;
+}
+
+.form-datos {
+  /* border-style: ridge; */
+  background-color: rgb(247, 245, 245);
+  border-radius: 2%;
+  box-shadow: #c9c9c9 9px 9px 16px 0px;
+}
+
+.form-datos > div {
+  margin-bottom: 4% !important;
+  margin-top: 4% !important;
+}
+
+.titulo {
+  font-style: oblique;
+  font-weight: bold;
+}
+div > .titulo {
+  text-align: center;
 }
