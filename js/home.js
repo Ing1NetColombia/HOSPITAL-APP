@@ -38,16 +38,28 @@ function cargarPlantilla(plantilla, destino) {
       return response.text();
     })
     .then(function (texto) {
-      console.log(texto);
       var contenedor = document.getElementById(destino);
       contenedor.innerHTML = "";
       contenedor.innerHTML = texto;
-      var scriptTag = document.getElementById("script" + plantilla);
+      ejecutarScriptsEnContenido(contenedor);
+      //var scriptTag = document.getElementById("script" + plantilla);
       //var scriptHome = document.getElementById("homeScript");
-      var body = document.getElementsByTagName("body");
+      /*var body = document.getElementsByTagName("body");
       if (scriptTag) {
         body[0].insertBefore(scriptTag, null);
-        //scriptTag.src = scriptTag.src;
-      }
+        scriptTag.src = scriptTag.src;
+      }*/
     });
+}
+
+function ejecutarScriptsEnContenido(elemento) {
+  if (!elemento) {
+    return;
+  }
+  const scripts = elemento.querySelectorAll("script");
+  scripts.forEach((script) => {
+    const nuevoScript = document.createElement("script");
+    nuevoScript.text = script.text;
+    script.parentNode.replaceChild(nuevoScript, script);
+  });
 }

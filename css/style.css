@@ -47,13 +47,22 @@ body {
   cursor: pointer;
 }
 
-.btn-success {
+.btn-primary {
   background-color: #6d89ed !important;
   border-color: #637bd5 !important;
 }
 
-.btn-success:hover {
+.btn-primary:hover {
   background-color: #637bd5 !important;
+}
+
+.btn-success {
+  background-color: #6DEDD6 !important;
+  border-color: #5acab6 !important;
+}
+
+.btn-success:hover {
+  background-color: #5acab6 !important;
 }
 
 .form-datos {
