@@ -1,11 +1,11 @@
-window.addEventListener("load", function(){
+/*window.addEventListener("load", function(){
     let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
-    if(usuarioLog == null){
+    if(Object.keys(usuarioLog).length == 0){
         window.location.href = "../index.html";
     }else{
-        //x = window.history.go(-1);
+        window.location.href = "/pages/home.html";
     }
-});
+});*/
 
 function cerrarSesion(){
     localStorage.removeItem("usuario");

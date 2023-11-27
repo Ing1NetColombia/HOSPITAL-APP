@@ -2,8 +2,10 @@
 <div
   class="modal fade"
   id="modalAgregar"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
   tabindex="-1"
-  aria-labelledby="exampleModalLabel"
+  aria-labelledby="staticBackdropLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
@@ -59,9 +61,14 @@
   </div>
 </div>
 <!-- fin modal -->
+<a class="btn btn-secondary" onclick="cargarPlantilla('inicio','divHome');"
+  >volver</a
+>
+
 <div class="row">
   <div class="col-6 offset-3">
     <button class="btn btn-success" onclick="agregar()">Agregar</button>
+    <button onclick="refrescar()">refresh</button>
     <table id="tabla">
       <thead>
         <th>id</th>
@@ -76,10 +83,12 @@
 </div>
 
 <script>
+  var tablaPacientes;
   $(document).ready(function () {
     var datosTabla = JSON.parse(localStorage.getItem("pacientes")) || [];
+    tablaPacientes = $("#tabla");
     console.log(datosTabla);
-    $("#tabla").DataTable({
+    tablaPacientes.DataTable({
       responsive: true,
       data: datosTabla,
       columnDefs: [
@@ -115,11 +124,18 @@
     }
 
     let pacientes = JSON.parse(localStorage.getItem("pacientes")) || [];
-    console.log(pacientes);
     objetoJson["id"] = pacientes.length + 1;
-    console.log(objetoJson);
     pacientes.push(objetoJson);
-    console.log(pacientes);
     localStorage.setItem("pacientes", JSON.stringify(pacientes));
+    Swal.fire({
+      icon: "success",
+      title: "Completo.",
+      text: "El paciente ha sido registrado correctamente!"
+    });
+    formulario.reset();
+  }
+
+  function refrescar() {
+    tablaPacientes.DataTable().ajax.reload();
   }
 </script>

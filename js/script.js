@@ -1,12 +1,12 @@
-// $( window ).on( "load", function() {
-//     let usuarioLog = JSON.parse(localStorage.getItem("usuario"));
-//     if(usuarioLog != null){
+$( window ).on( "load", function() {
+    let usuarioLog = JSON.parse(localStorage.getItem("usuario")) || {};
+    if(Object.keys(usuarioLog).length > 0){
        
-//             window.location.href = "/pages/home.html";
+            window.location.href = "/pages/home.html";
         
-//     }
+    }
     
-// });
+});
 
 function iniciarSesion() {
     let usuario = document.getElementById("usuario").value;
@@ -19,12 +19,20 @@ function iniciarSesion() {
     });
 
     if(usuarioLog.length == 0){
-        alert("Usuario no encontrado");
+        Swal.fire({
+            icon: "warning",
+            title: "Oops...",
+            text: "El usuario ingresado no no existe."
+          });
         return;
     }
 
     if(usuarioLog[0]["contra"] != contra){
-        alert("Contraseña incorrecta");
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "La contraseña ingresada no es correcta."
+          });
         return;
     }
     localStorage.setItem("usuario", JSON.stringify(usuarioLog[0]));
