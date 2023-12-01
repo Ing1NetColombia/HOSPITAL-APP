@@ -85,6 +85,10 @@
 <script>
   var tablaPacientes;
   $(document).ready(function () {
+    cargarTabla();
+  });
+
+  function cargarTabla(){
     var datosTabla = JSON.parse(localStorage.getItem("pacientes")) || [];
     tablaPacientes = $("#tabla");
     console.log(datosTabla);
@@ -105,7 +109,7 @@
         { data: "sexo" },
       ],
     });
-  });
+  }
 
   function agregar() {
     $("#modalAgregar").modal("show");
@@ -130,12 +134,13 @@
     Swal.fire({
       icon: "success",
       title: "Completo.",
-      text: "El paciente ha sido registrado correctamente!"
+      text: "El paciente ha sido registrado correctamente!",
     });
     formulario.reset();
   }
 
   function refrescar() {
-    tablaPacientes.DataTable().ajax.reload();
+    //tablaPacientes.DataTable().ajax.reload();
+    cargarTabla();
   }
 </script>

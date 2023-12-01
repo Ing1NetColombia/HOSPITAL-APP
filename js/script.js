@@ -22,7 +22,7 @@ function iniciarSesion() {
         Swal.fire({
             icon: "warning",
             title: "Oops...",
-            text: "El usuario ingresado no no existe."
+            text: "El usuario ingresado no existe."
           });
         return;
     }
