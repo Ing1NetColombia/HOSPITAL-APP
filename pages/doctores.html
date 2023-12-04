@@ -1,0 +1,152 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalAgregar"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar doctor</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="formDoctor">
+          <div class="form-group">
+            <label for="documento">Documento:</label>
+            <input type="number" name="documento" id="" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="edad">Edad:</label>
+            <input type="number" name="edad" id="" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="sexo">Sexo:</label>
+            <select name="sexo" class="form-control" id="">
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option value="F">Femenino</option>
+              <option value="M">Masculino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="especialidad">Especialidad:</label>
+            <select name="especialidad" class="form-control" id="">
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option value="M">Medicina general</option>
+              <option value="D">Odontologia</option>
+              <option value="P">Psiquiatria</option>
+              <option value="O">Optometria</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" onclick="guardarDoctor()" class="btn btn-primary">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin modal -->
+<a class="btn btn-secondary" onclick="cargarPlantilla('inicio','divHome');"
+  >volver</a
+>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <button class="btn btn-success" onclick="agregar()">Agregar</button>
+    <button onclick="refrescar()">refresh</button>
+    <table id="tabla">
+      <thead>
+        <th>id</th>
+        <th>documento</th>
+        <th>nombre</th>
+        <th>edad</th>
+        <th>sexo</th>
+        <th>especialidad</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  var tablaPacientes;
+  $(document).ready(function () {
+    cargarTabla();
+  });
+
+  function cargarTabla() {
+    var datosTabla = JSON.parse(localStorage.getItem("doctores")) || [];
+    tablaPacientes = $("#tabla");
+    console.log(datosTabla);
+    tablaPacientes.DataTable({
+      responsive: true,
+      data: datosTabla,
+      columnDefs: [
+        {
+          defaultContent: "-",
+          targets: "_all",
+        },
+      ],
+      columns: [
+        { data: "id" },
+        { data: "documento" },
+        { data: "nombre" },
+        { data: "edad" },
+        { data: "sexo" },
+        { data: "especialidad" },
+      ],
+    });
+  }
+
+  function agregar() {
+    $("#modalAgregar").modal("show");
+    $("#formDoctor")[0].reset();
+  }
+
+  function guardarDoctor() {
+    let formulario = document.getElementById("formDoctor");
+
+    let datos = new FormData(formulario);
+    var objetoJson = {};
+
+    // Iterate over each field in the form
+    for (var item of datos.entries()) {
+      objetoJson[item[0]] = item[1]; // Add the field name and value to the JSON object
+    }
+
+    let doctores = JSON.parse(localStorage.getItem("doctores")) || [];
+    objetoJson["id"] = doctores.length + 1;
+    doctores.push(objetoJson);
+    localStorage.setItem("doctores", JSON.stringify(doctores));
+    Swal.fire({
+      icon: "success",
+      title: "Completo.",
+      text: "El paciente ha sido registrado correctamente!",
+    });
+    formulario.reset();
+  }
+
+  function refrescar() {
+    //tablaPacientes.DataTable().ajax.reload();
+    cargarTabla();
+  }
+</script>
