@@ -43,9 +43,9 @@ function registroUsuario() {
   let documento = document.getElementById("docid").value;
   let nombre = document.getElementById("nombre").value;
 
-  var usuarios = localStorage.getItem("usuarios") || [];
+  var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
   if (usuarios !== null) {
-    //console.log(usuarios);
+    console.log(usuarios);
     var usuarioLog = usuarios.filter(function (usuarioF) {
       return usuarioF["usuario"] == usuario;
     });
