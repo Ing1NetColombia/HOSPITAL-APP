@@ -3,31 +3,104 @@
 >
 <div class="row">
   <div class="col-4 offset-4">
-    <form class="form form-datos p-4">
-        <div class="form-group">
-            <h4 class="titulo">Datos de la cita:</h4>
-        </div>
+    <form class="form form-datos p-4" id="formCita">
+      <div class="form-group">
+        <h4 class="titulo">Datos de la cita:</h4>
+      </div>
       <div class="form-group m-2">
         <label for="patient">Paciente:</label>
-        <select class="form-control" id="patient" name="patient">
+        <select class="form-control" id="paciente" name="patient">
           <option value="" disabled>Seleccione una opción</option>
           <!-- Add patient options here -->
         </select>
       </div>
+
+      <div class="form-group m-2">
+        <label for="especialidad">Especialidad:</label>
+        <select class="form-control" name="especialidad" id="especialidad">
+          <option value="" disabled>Seleccione un opción</option>
+        </select>
+      </div>
+
       <div class="form-group m-2">
         <label for="doctor">Doctor:</label>
         <select class="form-control" id="doctor" name="doctor">
           <option value="" disabled>Seleccione una opción</option>
           <!-- Add doctor options here -->
-        </select>   
+        </select>
       </div>
       <div class="form-group m-2">
         <label for="date">Fecha:</label>
         <input class="form-control" type="date" id="date" name="date" />
       </div>
       <div class="form-group mx-auto col-2">
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <input type="button" class="btn btn-primary" onclick="guardarCita()" value="Guardar">
       </div>
     </form>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    llenarSelect("pacientes", "paciente");
+    //llenarSelect("doctores", "doctor");
+    //console.log(especialedades);
+    llenarEspecialidades();
+    llenarDoctores();
+  });
+
+  document
+    .getElementById("especialidad")
+    .addEventListener("change", function () {
+      llenarDoctores(this.value);
+    });
+
+  function llenarDoctores(especial) {
+    let doctores = localStorage.getItem("doctores") || [];
+
+    if (doctores.length == 0) {
+      alert("No hay doctores disponibles.");
+      return;
+    }
+
+    doctores = JSON.parse(doctores);
+
+    let doctoresF = doctores.filter(function (doctor) {
+      return doctor["especialidad"] == especial;
+    });
+
+    document.getElementById("doctor").innerHTML = `<option value="0" disabled selected>Seleccione una opción</option>`
+
+    doctoresF.forEach((element) => {
+      document.getElementById("doctor").innerHTML += `
+        <option value="${element["documento"]}">${element["nombre"]}</option>
+      `;
+    });
+
+    //document.getElementById("doctor").value = "0";
+  }
+
+  function guardarCita() {
+    let formulario = document.getElementById("formCita");
+
+    let datos = new FormData(formulario);
+    var objetoJson = {};
+
+    // Iterate over each field in the form
+    for (var item of datos.entries()) {
+      objetoJson[item[0]] = item[1]; // Add the field name and value to the JSON object
+    }
+
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+
+    citas.push(objetoJson);
+    localStorage.setItem("citas",JSON.stringify(citas));
+    Swal.fire({
+      icon: "success",
+      title: "Completo.",
+      text: "La cita ha sido asignada!",
+    });
+    formulario.reset();
+  }
+
+</script>

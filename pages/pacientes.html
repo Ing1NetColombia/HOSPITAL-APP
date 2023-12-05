@@ -90,9 +90,7 @@
 
   function cargarTabla(){
     var datosTabla = JSON.parse(localStorage.getItem("pacientes")) || [];
-    tablaPacientes = $("#tabla");
-    console.log(datosTabla);
-    tablaPacientes.DataTable({
+    tablaPacientes = $("#tabla").DataTable({
       responsive: true,
       data: datosTabla,
       columnDefs: [
@@ -137,10 +135,14 @@
       text: "El paciente ha sido registrado correctamente!",
     });
     formulario.reset();
+    $("#modalAgregar").modal("hide");
+    refrescar();
   }
 
   function refrescar() {
     //tablaPacientes.DataTable().ajax.reload();
-    cargarTabla();
+    tablaPacientes.clear();
+    tablaPacientes.rows.add(JSON.parse(localStorage.getItem("pacientes")));
+    tablaPacientes.draw();
   }
 </script>

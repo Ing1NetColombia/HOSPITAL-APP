@@ -64,3 +64,19 @@ function ejecutarScriptsEnContenido(elemento) {
     script.parentNode.replaceChild(nuevoScript, script);
   });
 }
+
+function llenarSelect(idDatos, idSelect) {
+  let datos = JSON.parse(localStorage.getItem(idDatos)) || [];
+  datos.forEach((element) => {
+    document.getElementById(idSelect).innerHTML += `
+    <option value= "${element["documento"]}"> ${element["nombre"]} </option>`;
+  });
+
+}
+function llenarEspecialidades() {
+  especialidades.forEach((element) => {
+    document.getElementById("especialidad").innerHTML += `
+      <option value="${element["valor"]}">${element["nombre"]}</option>
+    `;
+  });
+}

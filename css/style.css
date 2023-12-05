@@ -84,3 +84,8 @@ body {
 div > .titulo {
   text-align: center;
 }
+
+#frmLogin{
+  margin-top: 5% !important;
+  padding: 5%;
+}

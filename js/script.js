@@ -10,7 +10,7 @@ function iniciarSesion() {
   let contra = document.getElementById("contra").value;
 
   var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  console.log(usuarios);
+
   var usuarioLog = usuarios.filter(function (usuarioF) {
     return usuarioF["usuario"] == usuario;
   });
@@ -32,6 +32,7 @@ function iniciarSesion() {
     });
     return;
   }
+
   localStorage.setItem("usuario", JSON.stringify(usuarioLog[0]));
   window.location.href = "../pages/home.html";
 }
@@ -66,3 +67,5 @@ function registroUsuario() {
   alert("Registro completo");
   document.getElementById("formRegistro").reset();
 }
+
+

@@ -43,12 +43,9 @@
           </div>
           <div class="form-group">
             <label for="especialidad">Especialidad:</label>
-            <select name="especialidad" class="form-control" id="">
+            <select name="especialidad" class="form-control" id="especialidad">
               <option value="" disabled selected>Seleccione una opción</option>
-              <option value="M">Medicina general</option>
-              <option value="D">Odontologia</option>
-              <option value="P">Psiquiatria</option>
-              <option value="O">Optometria</option>
+              
             </select>
           </div>
         </form>
@@ -91,13 +88,13 @@
   var tablaPacientes;
   $(document).ready(function () {
     cargarTabla();
+
+    llenarEspecialidades();
   });
 
   function cargarTabla() {
     var datosTabla = JSON.parse(localStorage.getItem("doctores")) || [];
-    tablaPacientes = $("#tabla");
-    console.log(datosTabla);
-    tablaPacientes.DataTable({
+    tablaPacientes = $("#tabla").DataTable({
       responsive: true,
       data: datosTabla,
       columnDefs: [
@@ -143,10 +140,14 @@
       text: "El paciente ha sido registrado correctamente!",
     });
     formulario.reset();
+    $("#modalAgregar").modal("hide");
+    refrescar();
   }
 
   function refrescar() {
     //tablaPacientes.DataTable().ajax.reload();
-    cargarTabla();
+    tablaPacientes.clear();
+    tablaPacientes.rows.add(JSON.parse(localStorage.getItem("doctores")));
+    tablaPacientes.draw();
   }
 </script>
