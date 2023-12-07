@@ -1,42 +1,95 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalAgregar"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Asignar una cita
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="form p-4" id="formCita">
+          <div class="form-group">
+            <h4 class="titulo">Datos de la cita:</h4>
+          </div>
+          <div class="form-group m-2">
+            <label for="patient">Paciente:</label>
+            <select class="form-control" id="paciente" name="paciente">
+              <option value="" disabled>Seleccione una opción</option>
+              <!-- Add patient options here -->
+            </select>
+          </div>
+
+          <div class="form-group m-2">
+            <label for="especialidad">Especialidad:</label>
+            <select class="form-control" name="especialidad" id="especialidad">
+              <option value="" disabled>Seleccione un opción</option>
+            </select>
+          </div>
+
+          <div class="form-group m-2">
+            <label for="doctor">Doctor:</label>
+            <select class="form-control" id="doctor" name="doctor">
+              <option value="" disabled>Seleccione una opción</option>
+              <!-- Add doctor options here -->
+            </select>
+          </div>
+          <div class="form-group m-2">
+            <label for="date">Fecha:</label>
+            <input class="form-control" type="date" id="date" name="date" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" onclick="guardarCita()" class="btn btn-primary">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin modal -->
+
 <a class="btn btn-secondary" onclick="cargarPlantilla('inicio','divHome');"
   >volver</a
 >
+
 <div class="row">
-  <div class="col-4 offset-4">
-    <form class="form form-datos p-4" id="formCita">
-      <div class="form-group">
-        <h4 class="titulo">Datos de la cita:</h4>
-      </div>
-      <div class="form-group m-2">
-        <label for="patient">Paciente:</label>
-        <select class="form-control" id="paciente" name="patient">
-          <option value="" disabled>Seleccione una opción</option>
-          <!-- Add patient options here -->
-        </select>
-      </div>
-
-      <div class="form-group m-2">
-        <label for="especialidad">Especialidad:</label>
-        <select class="form-control" name="especialidad" id="especialidad">
-          <option value="" disabled>Seleccione un opción</option>
-        </select>
-      </div>
-
-      <div class="form-group m-2">
-        <label for="doctor">Doctor:</label>
-        <select class="form-control" id="doctor" name="doctor">
-          <option value="" disabled>Seleccione una opción</option>
-          <!-- Add doctor options here -->
-        </select>
-      </div>
-      <div class="form-group m-2">
-        <label for="date">Fecha:</label>
-        <input class="form-control" type="date" id="date" name="date" />
-      </div>
-      <div class="form-group mx-auto col-2">
-        <input type="button" class="btn btn-primary" onclick="guardarCita()" value="Guardar">
-      </div>
-    </form>
+  <div class="col-4 offset-4"></div>
+</div>
+<div class="row">
+  <div class="col-6 offset-3">
+    <button class="btn btn-success" onclick="agregar()">Agregar</button>
+    <table id="tabla">
+      <thead>
+        <th>doc. paciente</th>
+        <th>nom. paciente</th>
+        <th>doc. doctor</th>
+        <th>nom. doctor</th>
+        <th>especialidad</th>
+        <th>fecha</th>
+        <th></th>
+        <th></th>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 </div>
 
@@ -47,6 +100,8 @@
     //console.log(especialedades);
     llenarEspecialidades();
     llenarDoctores();
+    obtenerDatosCita();
+    cargarTabla();
   });
 
   document
@@ -54,6 +109,35 @@
     .addEventListener("change", function () {
       llenarDoctores(this.value);
     });
+
+  function cargarTabla() {
+    //var datosTabla = JSON.parse(localStorage.getItem("citas")) || [];
+    tablaPacientes = $("#tabla").DataTable({
+      responsive: true,
+      data: obtenerDatosCita(),
+      columnDefs: [
+        {
+          defaultContent: "-",
+          targets: "_all",
+        },
+      ],
+      columns: [
+        { data: "docPaciente" },
+        { data: "nomPaciente" },
+        { data: "docDoctor" },
+        { data: "nomDoctor" },
+        { data: "especialidad" },
+        { data: "fecha" },
+        { data: "editar" },
+        { data: "eliminar" },
+      ],
+    });
+  }
+
+  function agregar() {
+    $("#modalAgregar").modal("show");
+    $("#formCita")[0].reset();
+  }
 
   function llenarDoctores(especial) {
     let doctores = localStorage.getItem("doctores") || [];
@@ -69,7 +153,9 @@
       return doctor["especialidad"] == especial;
     });
 
-    document.getElementById("doctor").innerHTML = `<option value="0" disabled selected>Seleccione una opción</option>`
+    document.getElementById(
+      "doctor"
+    ).innerHTML = `<option value="0" disabled selected>Seleccione una opción</option>`;
 
     doctoresF.forEach((element) => {
       document.getElementById("doctor").innerHTML += `
@@ -83,6 +169,8 @@
   function guardarCita() {
     let formulario = document.getElementById("formCita");
 
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+
     let datos = new FormData(formulario);
     var objetoJson = {};
 
@@ -91,16 +179,84 @@
       objetoJson[item[0]] = item[1]; // Add the field name and value to the JSON object
     }
 
-    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+    objetoJson["idCita"] = citas.length + 1;
 
     citas.push(objetoJson);
-    localStorage.setItem("citas",JSON.stringify(citas));
+    localStorage.setItem("citas", JSON.stringify(citas));
     Swal.fire({
       icon: "success",
       title: "Completo.",
       text: "La cita ha sido asignada!",
     });
     formulario.reset();
+    refrescar();
   }
 
+  function refrescar() {
+    //tablaPacientes.DataTable().ajax.reload();
+    tablaPacientes.clear();
+    tablaPacientes.rows.add(obtenerDatosCita());
+    tablaPacientes.draw();
+  }
+
+  function obtenerDatosCita() {
+    let citas = JSON.parse(localStorage.getItem("citas")) || [];
+    let pacientes = JSON.parse(localStorage.getItem("pacientes")) || [];
+    let doctores = JSON.parse(localStorage.getItem("doctores")) || [];
+
+    let citasFinal = [];
+
+    citas.forEach(function (e) {
+      let pacienteCita = pacientes.filter(function (p) {
+        return p["documento"] == e["paciente"];
+      });
+
+      let doctorCita = doctores.filter(function (d) {
+        return d["documento"] == e["doctor"];
+      });
+
+      let especialCita = especialidades.filter(function (esp) {
+        return esp["valor"] == e["especialidad"];
+      });
+      let cita = {
+        nomPaciente: pacienteCita[0]["nombre"],
+        docPaciente: pacienteCita[0]["documento"],
+        nomDoctor: doctorCita[0]["nombre"],
+        docDoctor: doctorCita[0]["documento"],
+        especialidad: especialCita[0]["nombre"],
+        fecha: e["date"],
+        editar: `<a class="btn btn-outline-warning" onclick="alert('${e["idCita"]}')"> <i class="bi bi-pencil-square"></i> </a>`,
+        eliminar: `<a class="btn btn-outline-danger" onclick="eliminarCita(${e["idCita"]})"> <i class="bi bi-trash"></i> </a>`,
+      };
+
+      citasFinal.push(cita);
+    });
+    //console.log(citasFinal);
+    return citasFinal;
+  }
+
+  function eliminarCita(idCita) {
+    Swal.fire({
+      title: "Deseas eliminar esta cita?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Si",
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        let citas = JSON.parse(localStorage.getItem("citas")) || [];
+
+        let citaElim = citas.filter(function (c) {
+          return citas["idCita"] == c;
+        });
+
+        citas.splice(citaElim, 1);
+
+        localStorage.setItem("citas", JSON.stringify(citas));
+        
+        refrescar();
+      } 
+    });
+  }
 </script>

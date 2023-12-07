@@ -1,8 +1,8 @@
-body {
+/* body { */
   /* background-image: url("../media/remi_enfer.png");
     background-repeat:round;
     background-size: cover;*/
-}
+/* } */
 
 #iconNav {
   width: 4vw;
@@ -16,7 +16,7 @@ body {
 
 .card {
   width: 15vw;
-  margin-left: 4vw;
+  margin-left: 13vw;
 }
 
 .card > img {
@@ -57,7 +57,7 @@ body {
 }
 
 .btn-success {
-  background-color: #6DEDD6 !important;
+  background-color: #6dedd6 !important;
   border-color: #5acab6 !important;
 }
 
@@ -85,7 +85,12 @@ div > .titulo {
   text-align: center;
 }
 
-#frmLogin{
-  margin-top: 5% !important;
+#frmLogin {
+  margin-top: 8% !important;
+  padding: 5%;
+}
+
+#frmRegistro {
+  margin-top: 2% !important;
   padding: 5%;
 }

@@ -15,6 +15,15 @@ function iniciarSesion() {
     return usuarioF["usuario"] == usuario;
   });
 
+  if (usuario == "") {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Por favor ingrese un usuario!",
+    });
+    return;
+  }
+
   if (usuarioLog.length == 0) {
     Swal.fire({
       icon: "warning",
@@ -40,8 +49,18 @@ function iniciarSesion() {
 function registroUsuario() {
   let usuario = document.getElementById("usuario").value;
   let contra = document.getElementById("contra").value;
+  let contra2 = document.getElementById("contra2").value;
   let documento = document.getElementById("docid").value;
   let nombre = document.getElementById("nombre").value;
+
+  if (contra2 !== contra) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Las contraseñas ingresadas no son iguales!",
+    });
+    return;
+  }
 
   var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
   if (usuarios !== null) {
@@ -51,7 +70,11 @@ function registroUsuario() {
     });
 
     if (usuarioLog.length > 0) {
-      alert("Usuario ya existe");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El usuario ingresado ya existe!",
+      });
       return;
     }
   }
@@ -64,8 +87,10 @@ function registroUsuario() {
   usuarios.push(usuarioR);
 
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  alert("Registro completo");
+  Swal.fire({
+    icon: "success",
+    title: "Completo.",
+    text: "El usuario se ha registrado correctamente!",
+  });
   document.getElementById("formRegistro").reset();
 }
-
-

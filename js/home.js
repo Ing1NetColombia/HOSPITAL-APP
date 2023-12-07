@@ -74,6 +74,9 @@ function llenarSelect(idDatos, idSelect) {
 
 }
 function llenarEspecialidades() {
+  document.getElementById(
+    "especialidad"
+  ).innerHTML = `<option value="0" disabled selected>Seleccione una opción</option>`;
   especialidades.forEach((element) => {
     document.getElementById("especialidad").innerHTML += `
       <option value="${element["valor"]}">${element["nombre"]}</option>
